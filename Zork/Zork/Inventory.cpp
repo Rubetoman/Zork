@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Item.h"
 #include "main.h"
+#include "Room.h"
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
@@ -13,21 +14,24 @@
 using namespace std;
 
 void dropItem(int number) {
-	cout << "Droping item" << endl;
-	Sleep(300);
-	cout << ".";
-	Sleep(300);
-	cout << ".";
-	Sleep(300);
-	cout << "." << endl;
-	Sleep(300);
+	showLoadingText("Droping item");
 	cout << inventory[number].getName() << " dropped." << endl;
-	Sleep(600);
+	currentRoom.setItem(inventory[number]);
 	inventory.erase(inventory.begin() + number);
+	Sleep(600);
+}
+
+void pickUpItem(int number) {
+	Item pickedItem = currentRoom.getItems()[number];
+	showLoadingText("Picking up item");
+	cout << pickedItem.getName() << " dropped." << endl;
+	inventory.push_back(pickedItem);
+	currentRoom.getItems().erase(currentRoom.getItems().begin() + number);
+	Sleep(600);
 }
 
 bool inInventory(Item i) {
-	for (int j=0; inventory.size() > j; j++) {
+	for (size_t j=0; inventory.size() > j; j++) {
 		if (inventory[j].getName() == i.getName())
 			return true;
 	}
@@ -35,7 +39,7 @@ bool inInventory(Item i) {
 }
 
 int getItemNumberInInventory(string name) {
-	for (int j=0; inventory.size() > j; j++) {
+	for (size_t j=0; inventory.size() > j; j++) {
 		if (inventory[j].getName() == name)
 			return j;
 	}
@@ -54,7 +58,7 @@ int showCombinableItems(Item i) {
 
 	if (compatibleItems.size() < 1)
 		return 0;
-	for (int j = 0; compatibleItems.size() > j; j++) {
+	for (size_t j = 0; compatibleItems.size() > j; j++) {
 		if (inInventory(inventory[j])) {
 			cout << k << ": " << compatibleItems[j].getName() << endl;
 			k++;
@@ -67,15 +71,17 @@ int showCombinableItems(Item i) {
 string getCombinableItemName(Item i, int number) {
 	int k = 1;
 	vector<Item> compatibleItems = i.getCompatibleItems();
-	if (compatibleItems.size() < 1)
-		return NULL;
-	for (int j = 0; compatibleItems.size() > j; j++) {
+	if (compatibleItems.size() < 1) {
+		cout << "None" << endl;
+	}
+	for (size_t j = 0; compatibleItems.size() > j; j++) {
 		if (inInventory(inventory[j])) {
 			if(k == number)
 				return compatibleItems[j].getName();
 			k++;
 		}
 	}
+	return "";
 }
 void combineItems(int itemA, int itemB) {
 	showLoadingText("Combining " + inventory[itemA].getName() + " with " + inventory[itemB].getName());
@@ -140,7 +146,7 @@ void manageItem(int itemNumber) {
 }
 
 void showPlayerItems() {
-	int i = 0;
+	size_t i = 0;
 	for (i; inventory.size() > i; i++) {
 		cout << i + 1 << ": " << inventory[i].getName() << endl;
 	}
@@ -174,5 +180,12 @@ void manageInventory() {
 			_getch();	// Avoid exiting function before calling manageInventory();
 		}
 	}
+}
 
+bool isItem(Item i) {
+	for (size_t j = 0; inventory.size() > j; j++) {
+		if (i.getName() == inventory[j].getName())
+			return true;
+	}
+	return false;
 }

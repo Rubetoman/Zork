@@ -14,5 +14,7 @@ void showPlayerItems();
 
 void manageInventory();
 
+bool isItem(Item i);
+
 #endif
 

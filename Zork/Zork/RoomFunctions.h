@@ -6,7 +6,7 @@
 #include "main.h"
 
 #pragma once
-void showLocations(string current);
-string move(string current);
+void showRooms();
+Room move();
 
 #endif

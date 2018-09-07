@@ -9,13 +9,12 @@ void Room::setDescription(string description) {
 }
 
 string Room::getDescription() {
-	if (!this->description.empty())
-		return this->description;
+	return this->description;
 }
 
 void Room::setConnectedRoom(Room r) {
 	bool already = false;
-	for (int i = 0; this->connectedRooms.size() > i; i++) {
+	for (size_t i = 0; this->connectedRooms.size() > i; i++) {
 		if (this->connectedRooms[i].getName() == r.getName()) {
 			already = true;
 			cout << r.getName() << " is already on the connectedRooms vector." << endl;
@@ -27,8 +26,8 @@ void Room::setConnectedRoom(Room r) {
 
 void Room::setConnectedRooms(vector<Room> v) {
 	bool already = false;
-	for (int j = 0; v.size() > j; j++) {
-		for (int i = 0; this->connectedRooms.size() > i; i++) {
+	for (size_t j = 0; v.size() > j; j++) {
+		for (size_t i = 0; this->connectedRooms.size() > i; i++) {
 			if (this->connectedRooms[i].getName() == v[j].getName()) {
 				already = true;
 				cout << v[j].getName() << " is already on the connectedRooms vector." << endl;
@@ -40,11 +39,12 @@ void Room::setConnectedRooms(vector<Room> v) {
 }
 
 vector<Room> Room::getConnectedRooms() {
-	if (!this->connectedRooms.empty())
-		return this->connectedRooms;
+	if (this->connectedRooms.empty())
+		cout << "There are no rooms connected." << endl;
+	return this->connectedRooms;
 }
 bool Room::isRoomConnected(Room r) {
-	for (int i = 0; this->connectedRooms.size() > i; i++) {
+	for (size_t i = 0; this->connectedRooms.size() > i; i++) {
 		if (this->connectedRooms[i].getName() == r.getName())
 			return true;
 	}
@@ -56,9 +56,15 @@ void Room::setItem(Item i) {
 }
 
 void Room::setItems(vector<Item> v) {
-	for (int i = 0; i < v.size(); i++) {
+	for (size_t i = 0; i < v.size(); i++) {
 		this->items.push_back(v[i]);
 	}
+}
+
+vector<Item> Room::getItems() {
+	if (!this->items.empty())
+		cout << "There are no pickable items on the room" << endl;
+	return this->items;
 }
 
 

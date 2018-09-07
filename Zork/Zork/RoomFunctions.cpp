@@ -1,53 +1,54 @@
 #include "stdafx.h"
 #include "main.h"
+#include "Room.h"
 #include <string>
 #include <vector>
 #include <iostream>
 using namespace std;
 
-void showLocations(string current) {
-	int i = 1;
-	cout << "1: Bedroom" << endl;
-	cout << "2: Kitchen" << endl;
-	cout << "3: Toilet" << endl;
-	cout << "4: Entrance" << endl;
+void showRooms() {
+	for (size_t i = 0; rooms.size() > i; i++) {
+		cout << i + 1 << ": " << rooms[i].getName() << endl;
+	}
 }
 
-string move(string current) {
-
+Room move() {
+	system("cls");		//Clean screen
 	int newLocationNum;
-	string newLocation = current;
-	//locations location;
+	Room newRoom = currentRoom;
 
-	cout << "You are currently on the " << current << endl << "Where would you like to move to?:" << endl << endl;
-	showLocations(current);
+	cout << "You are currently on the " << currentRoom.getName() << endl << "Where would you like to move to?:" << endl << endl;
+	showRooms();
 	cout << endl;
 
 	// Get Input
-	newLocationNum = getInput(1, 4);
+	newLocationNum = getInput(1, 5);
 	switch (newLocationNum)
 	{
 	case 1:
-		newLocation = "bedroom";
+		newRoom = rooms[0];
 		break;
 	case 2:
-		newLocation = "kitchen";
+		newRoom = rooms[1];
 		break;
 	case 3:
-		newLocation = "toilet";
+		newRoom = rooms[2];
 		break;
 	case 4:
-		newLocation = "entrance";
+		newRoom = rooms[3];
+		break;
+	case 5:
+		newRoom = rooms[4];
 		break;
 	default:
 		break;
 	}
-	showLoadingText("Walking to " + newLocation);
-	if (current != newLocation)
-		cout << "You moved to the " << newLocation << "." << endl << endl;
+	showLoadingText("Walking to " + newRoom.getName());
+	if (currentRoom.getName() != newRoom.getName())
+		cout << "You moved to the " << newRoom.getName() << "." << endl << endl;
 	else
-		cout << "You stayed on the " << newLocation << "." << endl << endl;
+		cout << "You stayed on the " << newRoom.getName() << "." << endl << endl;
 
 	//waitForInput();
-	return newLocation;
+	return newRoom;
 }

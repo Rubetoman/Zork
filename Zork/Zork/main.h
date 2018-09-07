@@ -5,14 +5,18 @@
 #include <vector>
 #include "Item.h"
 #include "Inventory.h"
+#include "Room.h"
 #pragma once
 using namespace std;
 
 extern vector<Item> inventory;
+extern Room bedroom;
+extern Room livingRoom;
+extern Room kitchen;
+extern Room toilet;
+extern Room entrance;
 extern Room currentRoom;
 extern vector<Room> rooms;
-
-void showLocations(string current);
 
 int getInput(int min, int max);
 

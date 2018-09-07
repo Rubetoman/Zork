@@ -21,6 +21,7 @@ public:
 	bool isRoomConnected(Room r);
 	void setItem(Item i);
 	void setItems(vector<Item> v);
+	vector<Item> getItems();
 };
 
 #endif
