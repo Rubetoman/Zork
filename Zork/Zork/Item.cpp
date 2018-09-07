@@ -21,6 +21,11 @@ void Item::setCompatibleItems(vector<Item> v) {
 	}
 }
 
+vector<Item> Item::getCompatibleItems() {
+	if (this->compatibleItems.size() > 0)
+		return this->compatibleItems;
+}
+
 bool Item::isCompatible(Item i) {
 	for (int j = 0; j < this->compatibleItems.size(); j++) {
 		if (this->compatibleItems[j].name == i.name) {

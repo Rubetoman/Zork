@@ -9,14 +9,16 @@
 using namespace std;
 
 extern vector<Item> inventory;
-	
+extern Room currentRoom;
+extern vector<Room> rooms;
+
 void showLocations(string current);
 
 int getInput(int min, int max);
 
-void waitForInput();
+void waitForInput(bool back);
 
-string move(string current);
+void showLoadingText(string text);
 
 void game();
 

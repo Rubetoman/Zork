@@ -42,10 +42,12 @@ string move(string current) {
 	default:
 		break;
 	}
+	showLoadingText("Walking to " + newLocation);
 	if (current != newLocation)
 		cout << "You moved to the " << newLocation << "." << endl << endl;
 	else
 		cout << "You stayed on the " << newLocation << "." << endl << endl;
 
+	//waitForInput();
 	return newLocation;
 }

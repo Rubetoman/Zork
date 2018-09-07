@@ -12,7 +12,7 @@ public:
 	string getDescription();
 	void setCompatibleItem(Item i);
 	void setCompatibleItems(vector<Item> v);
+	vector<Item> getCompatibleItems();
 	bool isCompatible(Item i);
-
 };
 

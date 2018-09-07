@@ -26,11 +26,83 @@ void dropItem(int number) {
 	inventory.erase(inventory.begin() + number);
 }
 
+bool inInventory(Item i) {
+	for (int j=0; inventory.size() > j; j++) {
+		if (inventory[j].getName() == i.getName())
+			return true;
+	}
+	return false;
+}
+
+int getItemNumberInInventory(string name) {
+	for (int j=0; inventory.size() > j; j++) {
+		if (inventory[j].getName() == name)
+			return j;
+	}
+	return 0;
+}
 void showItemDescription(int number) {
 	system("cls");		//Clean screen
 	cout << inventory[number].getName() << ":" << endl << endl;
 	cout << "     " << inventory[number].getDescription() << endl;
-	waitForInput();
+	waitForInput(true);
+}
+
+int showCombinableItems(Item i) {
+	int k = 1;
+	vector<Item> compatibleItems = i.getCompatibleItems();
+
+	if (compatibleItems.size() < 1)
+		return 0;
+	for (int j = 0; compatibleItems.size() > j; j++) {
+		if (inInventory(inventory[j])) {
+			cout << k << ": " << compatibleItems[j].getName() << endl;
+			k++;
+		}
+	}
+	cout << k << ": Close list" << endl;
+	return k;
+}
+
+string getCombinableItemName(Item i, int number) {
+	int k = 1;
+	vector<Item> compatibleItems = i.getCompatibleItems();
+	if (compatibleItems.size() < 1)
+		return NULL;
+	for (int j = 0; compatibleItems.size() > j; j++) {
+		if (inInventory(inventory[j])) {
+			if(k == number)
+				return compatibleItems[j].getName();
+			k++;
+		}
+	}
+}
+void combineItems(int itemA, int itemB) {
+	showLoadingText("Combining " + inventory[itemA].getName() + " with " + inventory[itemB].getName());
+	Item combinedItem;
+	combinedItem.setName(inventory[itemA].getName() + " + " + inventory[itemB].getName());
+	combinedItem.setDescription(inventory[itemA].getName() + " combined with " + inventory[itemB].getName() + ".");
+	inventory.push_back(combinedItem);
+	inventory.erase(inventory.begin() + itemA);
+	inventory.erase(inventory.begin() + itemB-1);
+	cout << "Combined" << endl;
+	waitForInput(false);
+}
+void chooseToCombine(int number) {
+	int itemsCount = 0;
+	int itemNumber;
+	cout << "Compatible items: " << endl << endl;
+	itemsCount = showCombinableItems(inventory[number]);
+	if (itemsCount > 0) {	
+		cout << "Which one do you want to combine?: " << endl << endl;
+		itemNumber = getInput(1, itemsCount);
+		string itemName = getCombinableItemName(inventory[number], itemNumber);
+		combineItems(number, getItemNumberInInventory(itemName));
+	}
+	else {
+		cout << "You can't combine this object with another you currently have. " << endl << endl;
+		waitForInput(true);
+	}
 }
 
 void manageItem(int itemNumber) {
@@ -47,16 +119,17 @@ void manageItem(int itemNumber) {
 	{
 	case 1:
 		showItemDescription(itemNumber);
-		waitForInput();
+		waitForInput(true);
 		manageItem(itemNumber);
 		break;
 	case 2:
 		system("cls");		//Clean screen
 		dropItem(itemNumber);
-		waitForInput();
+		waitForInput(true);
 		break;
 	case 3:
 		//Start to combine function
+		chooseToCombine(itemNumber);
 		break;
 	case 4:
 		return;
@@ -65,7 +138,6 @@ void manageItem(int itemNumber) {
 		break;
 	}
 }
-
 
 void showPlayerItems() {
 	int i = 0;
@@ -88,7 +160,7 @@ void manageInventory() {
 	Sleep(600);
 	if (inventory.size() < 1) {
 		cout << "Your inventory is empty." << endl << endl;
-		waitForInput();
+		waitForInput(true);
 	}
 	else {
 		cout << "Inventory:" << endl;
