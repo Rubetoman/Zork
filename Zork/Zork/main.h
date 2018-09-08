@@ -5,11 +5,12 @@
 #include <vector>
 #include "Item.h"
 #include "Inventory.h"
+#include "InventoryFunctions.h"
 #include "Room.h"
 #pragma once
 using namespace std;
 
-extern vector<Item> inventory;
+extern Inventory inventory;
 extern Room bedroom;
 extern Room livingRoom;
 extern Room kitchen;

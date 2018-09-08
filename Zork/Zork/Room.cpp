@@ -43,6 +43,7 @@ vector<Room> Room::getConnectedRooms() {
 		cout << "There are no rooms connected." << endl;
 	return this->connectedRooms;
 }
+
 bool Room::isRoomConnected(Room r) {
 	for (size_t i = 0; this->connectedRooms.size() > i; i++) {
 		if (this->connectedRooms[i].getName() == r.getName())
@@ -51,20 +52,32 @@ bool Room::isRoomConnected(Room r) {
 	return false;
 }
 
-void Room::setItem(Item i) {
+void Room::addItem(Item i) {
 	this->items.push_back(i);
 }
 
-void Room::setItems(vector<Item> v) {
+void Room::addItems(vector<Item> v) {
 	for (size_t i = 0; i < v.size(); i++) {
 		this->items.push_back(v[i]);
 	}
 }
 
+void Room::deleteItem(Item i) {
+	this->items.erase(this->items.begin() + this->getItemNumber(i.getName()));
+}
+
 vector<Item> Room::getItems() {
-	if (!this->items.empty())
+	if (this->items.empty())
 		cout << "There are no pickable items on the room" << endl;
 	return this->items;
+}
+
+int Room::getItemNumber(string name) {
+	for (size_t j = 0; this->items.size() > j; j++) {
+		if (this->items[j].getName() == name)
+			return j;
+	}
+	return -1;
 }
 
 

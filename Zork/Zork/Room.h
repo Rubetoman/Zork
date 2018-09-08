@@ -19,9 +19,11 @@ public:
 	void setConnectedRooms(vector<Room> v);
 	vector<Room> getConnectedRooms();
 	bool isRoomConnected(Room r);
-	void setItem(Item i);
-	void setItems(vector<Item> v);
+	void addItem(Item i);
+	void addItems(vector<Item> v);
+	void deleteItem(Item i);
 	vector<Item> getItems();
+	int getItemNumber(string name);
 };
 
 #endif
