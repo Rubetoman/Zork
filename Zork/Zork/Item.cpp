@@ -9,6 +9,7 @@ void Item::setDescription(string description) {
 string Item::getDescription() {
 	if (!this->description.empty())
 		return this->description;
+	return "";
 }
 
 void Item::setCompatibleItem(Item i) {
@@ -22,8 +23,7 @@ void Item::setCompatibleItems(vector<Item> v) {
 }
 
 vector<Item> Item::getCompatibleItems() {
-	if (this->compatibleItems.size() > 0)
-		return this->compatibleItems;
+	return this->compatibleItems;
 }
 
 bool Item::isCompatible(Item i) {

@@ -42,7 +42,7 @@ void showItemDescription(int number) {
 	system("cls");		//Clean screen
 	cout << inventory.getItems()[number].getName() << ":" << endl << endl;
 	cout << "     " << inventory.getItems()[number].getDescription() << endl;
-	waitForInput(true);
+	waitForInput(true);	// Wait for the player key press.
 }
 
 int showCombinableItems(Item i) {
@@ -90,12 +90,12 @@ void combineItems(int itemA, int itemB) {
 	inventory.deleteItem(inventory.getItemNumber(a));
 	inventory.deleteItem(inventory.getItemNumber(b));
 	cout << "Combined" << endl;
-	waitForInput(false);
+	waitForInput(false);								// Wait for the player key press.
 }
 
 void chooseToCombine(int number) {
 	int itemsCount = 0;
-	int itemNumber;
+	size_t itemNumber;
 	Item itemToComb = inventory.getItems()[number];
 	cout << "Compatible items: " << endl << endl;
 	itemsCount = showCombinableItems(itemToComb);
@@ -107,12 +107,12 @@ void chooseToCombine(int number) {
 			combineItems(number, getItemNumberInInventory(itemName));
 		}
 		else {
-			waitForInput(true);
+			waitForInput(true);	// Wait for the player key press.
 		}
 	}
 	else {
 		cout << "You can't combine this object with another you currently have. " << endl << endl;
-		waitForInput(true);
+		waitForInput(true);	// Wait for the player key press.
 	}
 }
 
@@ -136,7 +136,7 @@ void manageItem(int itemNumber) {
 	case 2:
 		system("cls");		//Clean screen
 		dropItem(itemNumber);
-		waitForInput(true);
+		waitForInput(true);	// Wait for the player key press.
 		break;
 	case 3:
 		//Start to combine function
@@ -171,7 +171,7 @@ void manageInventory() {
 	Sleep(600);
 	if (inventory.getItems().size() < 1) {
 		cout << "Your inventory is empty." << endl << endl;
-		waitForInput(true);
+		waitForInput(true);	// Wait for the player key press.
 	}
 	else {
 		cout << "Inventory:" << endl;

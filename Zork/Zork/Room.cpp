@@ -12,6 +12,8 @@ string Room::getDescription() {
 	return this->description;
 }
 
+/*	Check that the Room isn't already on the vector and add it.
+*/
 void Room::setConnectedRoom(Room r) {
 	bool already = false;
 	for (size_t i = 0; this->connectedRooms.size() > i; i++) {
@@ -24,6 +26,8 @@ void Room::setConnectedRoom(Room r) {
 		this->connectedRooms.push_back(r);
 }
 
+/*	Loop through vector of Rooms, check that each Room isn't already on the vector and add them.
+*/
 void Room::setConnectedRooms(vector<Room> v) {
 	bool already = false;
 	for (size_t j = 0; v.size() > j; j++) {

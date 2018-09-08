@@ -11,7 +11,7 @@
 class Inventory : public Entity
 {
 protected:
-	vector<Item> items;
+	vector<Item> items;				
 public:
 	int getItemNumber(Item i);
 	int getItemNumber(string name);

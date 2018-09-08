@@ -5,14 +5,14 @@
 class Item : public Entity
 {
 protected:
-	string description;
-	vector<Item> compatibleItems;
+	string description;				// Description of the Item. Will be shown when examining the Item.
+	vector<Item> compatibleItems;	// Items that can be combined with it.
 public:
-	void setDescription(string description);
-	string getDescription();
-	void setCompatibleItem(Item i);
-	void setCompatibleItems(vector<Item> v);
-	vector<Item> getCompatibleItems();
-	bool isCompatible(Item i);
+	void setDescription(string description);	// Set a description for the Item.
+	string getDescription();					// Get the description of the Item.
+	void setCompatibleItem(Item i);				// Set an Item compatible to combine it.
+	void setCompatibleItems(vector<Item> v);	// Set some Items compatible to combine them with it.
+	vector<Item> getCompatibleItems();			// Get a vector with all the compatible Items.
+	bool isCompatible(Item i);					// Check if an Item is compatible to combine them.
 };
 
