@@ -15,29 +15,23 @@
 using namespace std;
 
 void dropItem(int number) {
-	showLoadingText("Droping item");
+	showLoadingText("Dropping item");					// Print "Dropping..."
 	cout << inventory.getItems()[number].getName() << " dropped." << endl;
-	currentRoom.addItem(inventory.getItems()[number]);
-	inventory.deleteItem(number);
-	Sleep(600);
+	currentRoom.addItem(inventory.getItems()[number]);	// Add Item to the Room Items vector.
+	inventory.deleteItem(number);						// Delete Item from Inventory.
+	Sleep(600);											// Give time to player to read.
 }
 
+/* The player choose an Item by the position inside the Inventory */
 void pickUpItem(int number) {
-	Item pickedItem = currentRoom.getItems()[number];
-	showLoadingText("Picking up item");
+	Item pickedItem = currentRoom.getItems()[number];	// Get the Item selected by the position.
+	showLoadingText("Picking up item");					// Print "Picking up item..."
 	cout << pickedItem.getName() << " picked up." << endl;
-	inventory.addItem(pickedItem);
-	currentRoom.deleteItem(pickedItem);
-	Sleep(600);
+	inventory.addItem(pickedItem);						// Add Item to the Inventory.
+	currentRoom.deleteItem(pickedItem);					// Delete Item from the Room Items vector.
+	Sleep(600);											// Give time to player to read.
 }
 
-int getItemNumberInInventory(string name) {
-	for (size_t j=0; inventory.getItems().size() > j; j++) {
-		if (inventory.getItems()[j].getName() == name)
-			return j;
-	}
-	return 0;
-}
 void showItemDescription(int number) {
 	system("cls");		//Clean screen
 	cout << inventory.getItems()[number].getName() << ":" << endl << endl;
@@ -45,6 +39,11 @@ void showItemDescription(int number) {
 	waitForInput(true);	// Wait for the player key press.
 }
 
+/*	Get the list of compatible Items from the Item given and print them one by one with the position number +1 so it starts in 1
+	At the end another option is provided to close list without combining any Items.
+	If there are no compatible Items print a message.
+	Returns an Integer with the number of options provided.
+*/
 int showCombinableItems(Item i) {
 	int k = 1;
 	vector<Item> compatibleItems = i.getCompatibleItems();
@@ -57,13 +56,11 @@ int showCombinableItems(Item i) {
 			k++;
 		}
 	}
-	if(k < 2)
-		cout << "No combinable items." << endl;
-	else
-		cout << k << ": Close list" << endl;
+	cout << k << ": Close list" << endl;
 	return k;
 }
 
+/* Look for the Item on the position given and print the name */
 string getCombinableItemName(Item i, int number) {
 	int k = 1;
 	vector<Item> compatibleItems = i.getCompatibleItems();
@@ -79,6 +76,12 @@ string getCombinableItemName(Item i, int number) {
 	}
 	return "";
 }
+
+/*	Look for both Items on the Inventory by position.
+	Create a new Item, add it to the Inventory and delete the other two from Inventory.
+	The name of the new Item will be the name of the of the first one followed by a " + " and the name of the second one.
+	The description of the new Item will be the name of the first one followed by a " combined with " and the name of the second one.
+*/
 void combineItems(int itemA, int itemB) {
 	Item combinedItem;
 	Item a = inventory.getItems()[itemA];
@@ -93,6 +96,9 @@ void combineItems(int itemA, int itemB) {
 	waitForInput(false);								// Wait for the player key press.
 }
 
+/*	Get the first Item choosen by his position on the Inventory vector and show the ones compatible
+	If there are no Items compatible on the Inventory a message is displayed.
+*/
 void chooseToCombine(int number) {
 	int itemsCount = 0;
 	size_t itemNumber;
@@ -104,7 +110,7 @@ void chooseToCombine(int number) {
 		itemNumber = getInput(1, itemsCount);
 		if (itemNumber <= itemToComb.getCompatibleItems().size()) {
 			string itemName = getCombinableItemName(itemToComb, itemNumber);
-			combineItems(number, getItemNumberInInventory(itemName));
+			combineItems(number, inventory.getItemNumber(itemName));
 		}
 		else {
 			waitForInput(true);	// Wait for the player key press.
@@ -118,31 +124,29 @@ void chooseToCombine(int number) {
 
 void manageItem(int itemNumber) {
 	int selection;
-	system("cls");		//Clean screen
+	system("cls");				//Clean screen.
 	cout << "What do you want to do with the " << inventory.getItems()[itemNumber].getName() << "?:" << endl << endl;
 	cout << "1: Examine." << endl;
 	cout << "2: Drop it." << endl;
 	cout << "3: Combine it with another item." << endl;
 	cout << "4: Go back." << endl << endl;
-	// Get Input
-	selection = getInput(1, 4);
+	selection = getInput(1, 4);	// Get Input.
 	switch (selection)
 	{
-	case 1:
+	case 1:	// Examine.
 		showItemDescription(itemNumber);
 		waitForInput(true);
 		manageItem(itemNumber);
 		break;
-	case 2:
-		system("cls");		//Clean screen
+	case 2:	// Drop Item.
+		system("cls");				//Clean screen.
 		dropItem(itemNumber);
-		waitForInput(true);	// Wait for the player key press.
+		waitForInput(true);			// Wait for the player key press.
 		break;
-	case 3:
-		//Start to combine function
-		chooseToCombine(itemNumber);
+	case 3:	// Combine Items.
+		chooseToCombine(itemNumber);//Start to combine function, choose the other Item to combine.
 		break;
-	case 4:
+	case 4:	// Go back.
 		return;
 		break;
 	default:
@@ -160,29 +164,23 @@ void showPlayerItems() {
 
 void manageInventory() {
 	int selectedItem = 0;
-	system("cls");		//Clean screen
-	cout << "Opening inventory";
-	Sleep(300);
-	cout << ".";
-	Sleep(300);
-	cout << ".";
-	Sleep(300);
-	cout << "." << endl << endl;
-	Sleep(600);
+	system("cls");							// Clean screen.
+	showLoadingText("Opening inventory");	// Print "Opening inventory...".
+	// Check if Inventory is empty.
 	if (inventory.getItems().size() < 1) {
 		cout << "Your inventory is empty." << endl << endl;
 		waitForInput(true);	// Wait for the player key press.
 	}
 	else {
 		cout << "Inventory:" << endl;
-		showPlayerItems();
+		showPlayerItems();	// Print Items names.
 		cout << endl << "Which item would you like to choose?:" << endl << endl;
-		// Get Input
+		// Get Input.
 		selectedItem = getInput(1, inventory.getItems().size() + 1);
 		if (selectedItem != inventory.getItems().size() + 1) {
 			manageItem(selectedItem - 1);
 			manageInventory();
-			_getch();	// Avoid exiting function before calling manageInventory();
+			_getch();	// Avoid exiting function before calling manageInventory().
 		}
 	}
 }

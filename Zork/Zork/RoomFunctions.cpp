@@ -12,6 +12,9 @@ void showRooms() {
 	}
 }
 
+/*	Show player's current Room, display rest of the rooms and move to the one choosen.
+	If the player chooses the Room where he already is then print a message and don't change current Room.
+*/
 Room move() {
 	system("cls");		//Clean screen
 	int newLocationNum;
@@ -21,8 +24,8 @@ Room move() {
 	showRooms();
 	cout << endl;
 
-	// Get Input
-	newLocationNum = getInput(1, 5);
+	newLocationNum = getInput(1, 5);	// Get Input.
+	// Store the new Room choosen. A number is increased because they are shown starting at 1 and inside the vector they start in 0.
 	switch (newLocationNum)
 	{
 	case 1:
@@ -49,6 +52,5 @@ Room move() {
 	else
 		cout << "You stayed on the " << newRoom.getName() << "." << endl << endl;
 
-	//waitForInput();
 	return newRoom;
 }

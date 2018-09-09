@@ -6,7 +6,14 @@
 #include "main.h"
 
 #pragma once
+
+/*	Show names of the Rooms stored on rooms vector.
+	They are shown followed by a number so the player inserts the number of the room desired.
+*/
 void showRooms();
+
+/*	Change player position to another Room.
+*/
 Room move();
 
 #endif

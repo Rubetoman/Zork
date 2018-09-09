@@ -3,12 +3,13 @@
 
 using namespace std;
 
+/* Base class for classes that have a name as a variable.*/
 class Entity
 {
 protected:
-	string name;
+	string name;				// Name of the Entity.
 public:
-	void setName(string name);
-	string getName();
+	void setName(string name);	// Sets the name variable of the Entity.
+	string getName();			// Get the name variable of Entity.
 };
 

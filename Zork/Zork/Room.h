@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 #pragma once
-/* Room object that inherits from Entity.
+/*	Room object that inherits from Entity.
+	Is used for each location of the map and store on them useful variables.
 */
 class Room : public Entity
 {

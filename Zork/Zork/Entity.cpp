@@ -11,5 +11,5 @@ string Entity::getName() {
 	if (!this->name.empty())
 		return this->name;
 	else
-		return "null";
+		return "";
 }
