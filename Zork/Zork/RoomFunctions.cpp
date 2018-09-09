@@ -12,6 +12,36 @@ void showRooms() {
 	}
 }
 
+void showRoomItems() {
+	size_t i = 0;
+	for (i; currentRoom.getItems().size() > i; i++) {
+		cout << i + 1 << ": " << inventory.getItems()[i].getName() << endl;
+	}
+	cout << i + 1 << ": Close inventory" << endl;
+}
+
+void lookForItems() {
+	int selectedItem = 0;
+	system("cls");							// Clean screen.
+	showLoadingText("Looking");	// Print "Opening inventory...".
+											// Check if Inventory is empty.
+	if (currentRoom.getItems().size() < 1) {
+		cout << "There is nothing usefull right now on this room." << endl << endl;
+		waitForInput(true);	// Wait for the player key press.
+	}
+	else {
+		cout << "You found the following objects:" << endl;
+		showRoomItems();	// Print Items names.
+		cout << endl << "Which item would you like to pick up?:" << endl << endl;
+		// Get Input.
+		selectedItem = getInput(1, currentRoom.getItems().size() + 1);
+		if (selectedItem != currentRoom.getItems().size() + 1) {
+			pickUpItem(selectedItem);
+			waitForInput(false);
+		}
+	}
+}
+
 /*	Show player's current Room, display rest of the rooms and move to the one choosen.
 	If the player chooses the Room where he already is then print a message and don't change current Room.
 */

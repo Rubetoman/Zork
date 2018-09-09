@@ -12,6 +12,16 @@
 */
 void showRooms();
 
+/*	Prints out the name of the Items stored on the Room the player currently is.
+	It is used to number and show the Items so the player can choose one of them.
+*/
+void showRoomItems();
+
+/*	Looks for pickupable Items on the Room where the player is located.
+	Lets the player to pick up one of the Items showed.
+*/
+void lookForItems();
+
 /*	Change player position to another Room.
 */
 Room move();
