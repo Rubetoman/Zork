@@ -22,8 +22,7 @@ void showRoomItems();
 */
 void lookForItems();
 
-/*	Change player position to another Room.
-*/
+/*	Change player position to another Room.*/
 Room move();
 
 #endif

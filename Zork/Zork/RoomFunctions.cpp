@@ -21,14 +21,16 @@ void showRoomItems() {
 	cout << i + 1 << ": Go back" << endl;
 }
 
+/*	Show pickable Items on the current Room and let the player choose one.
+	Pick up Item choosen by player from Room.
+*/
 void lookForItems() {
 	int selectedItem = 0;
 	system("cls");							// Clean screen.
 	showLoadingText("Looking");				// Print "Opening inventory...".
 	// Check if Inventory is empty.
 	if (currentRoom.getItems().size() < 1) {
-		//cout << "There is nothing usefull right now on this room." << endl << endl;
-		waitForInput(true);	// Wait for the player key press.
+		waitForInput(true);					// Wait for the player key press.
 		_getch();
 	}
 	else {
@@ -38,7 +40,7 @@ void lookForItems() {
 		// Get Input.
 		selectedItem = getInput(1, currentRoom.getItems().size() + 1);
 		if (selectedItem != currentRoom.getItems().size() + 1) {
-			pickUpItem(selectedItem-1);
+			pickUpItem(selectedItem-1);		// Pick up the Item.
 			waitForInput(false);
 		}
 	}
