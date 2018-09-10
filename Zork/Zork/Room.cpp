@@ -72,7 +72,7 @@ void Room::deleteItem(Item i) {
 
 vector<Item> Room::getItems() {
 	if (this->items.empty())
-		cout << "There are no pickable items on the room" << endl;
+		cout << "There are no pickable items on the room at this moment." << endl;
 	return this->items;
 }
 

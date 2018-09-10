@@ -56,7 +56,8 @@ int showCombinableItems(Item i) {
 			k++;
 		}
 	}
-	cout << k << ": Close list" << endl;
+	if(k>1)
+		cout << k << ": Close list" << endl;
 	return k;
 }
 

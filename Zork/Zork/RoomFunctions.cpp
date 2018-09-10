@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 void showRooms() {
@@ -15,19 +16,20 @@ void showRooms() {
 void showRoomItems() {
 	size_t i = 0;
 	for (i; currentRoom.getItems().size() > i; i++) {
-		cout << i + 1 << ": " << inventory.getItems()[i].getName() << endl;
+		cout << i + 1 << ": " << currentRoom.getItems()[i].getName() << endl;
 	}
-	cout << i + 1 << ": Close inventory" << endl;
+	cout << i + 1 << ": Go back" << endl;
 }
 
 void lookForItems() {
 	int selectedItem = 0;
 	system("cls");							// Clean screen.
-	showLoadingText("Looking");	// Print "Opening inventory...".
-											// Check if Inventory is empty.
+	showLoadingText("Looking");				// Print "Opening inventory...".
+	// Check if Inventory is empty.
 	if (currentRoom.getItems().size() < 1) {
-		cout << "There is nothing usefull right now on this room." << endl << endl;
+		//cout << "There is nothing usefull right now on this room." << endl << endl;
 		waitForInput(true);	// Wait for the player key press.
+		_getch();
 	}
 	else {
 		cout << "You found the following objects:" << endl;
@@ -36,7 +38,7 @@ void lookForItems() {
 		// Get Input.
 		selectedItem = getInput(1, currentRoom.getItems().size() + 1);
 		if (selectedItem != currentRoom.getItems().size() + 1) {
-			pickUpItem(selectedItem);
+			pickUpItem(selectedItem-1);
 			waitForInput(false);
 		}
 	}
